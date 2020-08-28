@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <fstream>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -11,16 +11,24 @@ map<string, int> stock(string);
 
 
 int main(int argc, char *argv[]) {
-  //ifstream order(argv[1]);
-  //ifstream warehouses(argv[2]);
-  string input = "house apple 1 orange 2 corn 5";
+  ifstream order(argv[1]);
+  ifstream ware(argv[2]);
+  string input = "";
   int num = 0;
+
   //take user's order
+  map<string, int> want;
+  getline(order, input);
+  want = stock(input);
+  cout << "order-" << endl;
+  cout << "apple: " << want["apple"] << endl;
+  cout << "bannana: " << want["bananna"] << endl;
 
   //take warehouse information reading first line then storing map into vector
   //until a match is found
   //only store items from warehouse that are wanted to save space
-  
+  getline(ware, input);
+  cout << input << endl;
   vector<string> name;
   vector<map<string, int>> warehouse;
   int space = input.find(" ");
@@ -28,8 +36,9 @@ int main(int argc, char *argv[]) {
   string list = input.substr(space+1);
   warehouse.push_back(stock(list));
 
-  cout << warehouse[0]["apple"] << endl;
-  cout << warehouse[0]["bannana"] << endl;
+  cout << "warehouse-" << endl;
+  cout << "apple: " << warehouse[0]["apple"] << endl;
+  cout << "bannana: " << warehouse[0]["bannana"] << endl;
 
   //if no single warehouse can complete order
   //then use vector of maps to piece together order
