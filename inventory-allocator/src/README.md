@@ -3,7 +3,7 @@
 - Clone the repo
 - cd into this directory
 - Build: `g++ main.cpp`
-- Run: `a.exe order.txt warehouse.txt`
+- Run: `./a.exe order.txt warehouse.txt`
 
 **a.exe can vary, it's the executable name that your build line creates.**
 
