@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
       int count = item.second;
       if(count <= warehouse[num][obj]){
         if(obj == want.rbegin()->first){
-          cout << name[num] << endl;
+          cout << name[num]  << ":" << endl;
           out(want);
           found = true;
         }
@@ -53,15 +53,34 @@ int main(int argc, char *argv[]) {
     num++;
   }
   ware.close();
-  cout << endl;
 
-  for(int i = 0; i < num; i++){
-    cout << name[i] << endl;
-    out(warehouse[i]);
-  }
   //if no single warehouse can complete order
   //then use vector of maps to piece together order
 
+  map<string, map<string, int>> solution;
+  if(found == false){
+    for (pair<string, int> item : want) {
+      for(int i = 0; i < num; i++){
+        if(warehouse[i][item.first] > 0){
+          if(warehouse[i][item.first] <= item.second){
+            solution[name[i]][item.first] = warehouse[i][item.first];
+            item.second -= warehouse[i][item.first];
+          }else{
+            solution[name[i]][item.first] = item.second;
+            item.second = 0;
+          }
+        }
+        if(item.second == 0){
+          break;
+        }
+      }
+    }
+    for (pair<string, map<string, int>> house : solution) {
+      cout << house.first << ":" << endl;
+      out(house.second);
+      cout << endl;
+    }
+  }
   return 0;
 }
 
