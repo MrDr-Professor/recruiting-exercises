@@ -1,0 +1,4 @@
+warehouse1 apple 1 corn 2 bannana 3
+warehouse2 apple 2 corn 1
+nohouse apple 1 corn 2
+warehouse3 apple 3 corn 2

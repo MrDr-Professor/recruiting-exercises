@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
   map<string, map<string, int>> solution;
   if(found == false){
     for (pair<string, int> item : want) {
+      bool complete = false;
       for(int i = 0; i < num; i++){
         if(warehouse[i][item.first] > 0){
           if(warehouse[i][item.first] <= item.second){
@@ -71,16 +72,28 @@ int main(int argc, char *argv[]) {
           }
         }
         if(item.second == 0){
+          complete = true;
           break;
         }
       }
+      if(complete == false){
+        break;
+      }else if(item.first == want.rbegin()->first){
+        found = true;
+      }
     }
-    for (pair<string, map<string, int>> house : solution) {
-      cout << house.first << ":" << endl;
-      out(house.second);
-      cout << endl;
+
+    if(found == true){
+      for (pair<string, map<string, int>> house : solution) {
+        cout << house.first << ":" << endl;
+        out(house.second);
+        cout << endl;
+      }
+    }else{
+      cout << "Order could not be completed." << endl;
     }
   }
+
   return 0;
 }
 
