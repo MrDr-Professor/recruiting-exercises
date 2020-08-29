@@ -1,1 +1,1 @@
-apple 1
+apple 1 corn 2 orange 1

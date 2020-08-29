@@ -8,6 +8,7 @@
 using namespace std;
 
 map<string, int> stock(string);
+void out(map<string, int>);
 
 
 int main(int argc, char *argv[]) {
@@ -19,27 +20,45 @@ int main(int argc, char *argv[]) {
   //take user's order
   map<string, int> want;
   getline(order, input);
+  order.close();
   want = stock(input);
-  cout << "order-" << endl;
-  cout << "apple: " << want["apple"] << endl;
-  cout << "bannana: " << want["bananna"] << endl;
 
   //take warehouse information reading first line then storing map into vector
   //until a match is found
   //only store items from warehouse that are wanted to save space
-  getline(ware, input);
-  cout << input << endl;
   vector<string> name;
   vector<map<string, int>> warehouse;
-  int space = input.find(" ");
-  name.push_back(input.substr(0, space));
-  string list = input.substr(space+1);
-  warehouse.push_back(stock(list));
+  bool found = false;
+  while(found == false && getline(ware, input)){
+    int space = input.find(" ");
 
-  cout << "warehouse-" << endl;
-  cout << "apple: " << warehouse[0]["apple"] << endl;
-  cout << "bannana: " << warehouse[0]["bannana"] << endl;
+    name.push_back(input.substr(0, space));
 
+    string list = input.substr(space+1);
+    warehouse.push_back(stock(list));
+
+    for (pair<string, int> item : want) {
+      string obj = item.first;
+      int count = item.second;
+      if(count <= warehouse[num][obj]){
+        if(obj == want.rbegin()->first){
+          cout << name[num] << endl;
+          out(want);
+          found = true;
+        }
+      }else{
+        break;
+      }
+    }
+    num++;
+  }
+  ware.close();
+  cout << endl;
+
+  for(int i = 0; i < num; i++){
+    cout << name[i] << endl;
+    out(warehouse[i]);
+  }
   //if no single warehouse can complete order
   //then use vector of maps to piece together order
 
@@ -57,4 +76,10 @@ map<string, int> stock(string line){
       inv[temp] = stoi(count);
   }
   return inv;
+}
+
+void out(map<string, int> stock){
+  for (pair<string, int> item : stock) {
+    cout << item.first << " " << item.second << endl;
+  }
 }
